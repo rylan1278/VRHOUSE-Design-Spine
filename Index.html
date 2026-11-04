@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.11.5/index.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin@5.11.5/index.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/gallery-plugin@5.11.5/index.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/virtual-tour-plugin@5.11.5/index.min.css">
 
   <style>
@@ -22,6 +23,19 @@
       transform-origin: center center;
       filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .35)); /* delete this line for a flat "decal on the floor" look */
     }
+    /* Hide the thumbnail picture in the arrow hover tooltip (gallery bar is unaffected) */
+    .psv-virtual-tour-tooltip {
+      background-image: none !important;
+      min-height: 0 !important;
+      height: auto !important;
+    }
+    .psv-virtual-tour-tooltip img {
+      display: none !important;
+    }
+    /* Hide the download button in the bottom toolbar */
+    .psv-download-button {
+      display: none !important;
+    }
   </style>
 
   <script type="importmap">
@@ -30,6 +44,7 @@
       "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
       "@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.11.5/index.module.min.js",
       "@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin@5.11.5/index.module.min.js",
+      "@photo-sphere-viewer/gallery-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/gallery-plugin@5.11.5/index.module.min.js",
       "@photo-sphere-viewer/virtual-tour-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/virtual-tour-plugin@5.11.5/index.module.min.js"
     }
   }
@@ -41,15 +56,20 @@
   <script type="module">
     import { Viewer } from '@photo-sphere-viewer/core';
     import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
+    import { GalleryPlugin } from '@photo-sphere-viewer/gallery-plugin';
     import { VirtualTourPlugin } from '@photo-sphere-viewer/virtual-tour-plugin';
 
     // Layout assumed: Classroom <-> Hall1 <-> Hall2 <-> Conference
     // Yaw/pitch values are placeholders. Click in the panorama to log real ones.
+    // "thumbnail" is what shows in the bottom gallery bar. It reuses the panorama
+    // image so you don't need extra files. If the bar loads slowly, make small
+    // thumbnail images (about 300px wide) and point these at them instead.
     const nodes = [
       {
         id: 'classroom',
         name: 'Classroom',
         panorama: 'images/Classroom.jpg',
+        thumbnail: 'images/Classroom.jpg',
         links: [
           { nodeId: 'hall1', position: { yaw: '-156deg', pitch: '-18deg' } },
         ],
@@ -58,6 +78,7 @@
         id: 'hall1',
         name: 'Hall 1',
         panorama: 'images/Hall1.jpg',
+        thumbnail: 'images/Hall1.jpg',
         links: [
           { nodeId: 'classroom', position: { yaw: '180deg', pitch: '-30deg' } },
           { nodeId: 'hall2', position: { yaw: '-92deg', pitch: '-15deg' } },
@@ -67,6 +88,7 @@
         id: 'hall2',
         name: 'Hall 2',
         panorama: 'images/Hall2.jpg',
+        thumbnail: 'images/Hall2.jpg',
         links: [
           { nodeId: 'hall1', position: { yaw: '-175deg', pitch: '-20deg' } },
           { nodeId: 'conference', position: { yaw: '30deg', pitch: '-25deg' } },
@@ -76,6 +98,7 @@
         id: 'conference',
         name: 'Conference',
         panorama: 'images/Conference.jpg',
+        thumbnail: 'images/Conference.jpg',
         links: [
           { nodeId: 'hall2', position: { yaw: '120deg', pitch: '-20deg' } },
         ],
@@ -94,6 +117,15 @@
       maxFov: MAX_FOV,
       plugins: [
         MarkersPlugin,
+        // Gallery bar at the bottom: click a room to jump straight to it.
+        // The gallery must be listed before the virtual tour plugin.
+        // visibleOnLoad: true = bar is open at start (false = hidden until the toolbar button is clicked)
+        // hideOnClick: true = bar closes after you pick a room
+        [GalleryPlugin, {
+          visibleOnLoad: false,
+          hideOnClick: false,
+          thumbnailSize: { width: 160, height: 100 },
+        }],
         [VirtualTourPlugin, {
           positionMode: 'manual',
           renderMode: '2d',
