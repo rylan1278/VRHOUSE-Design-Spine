@@ -6,9 +6,9 @@ An interactive 360-degree virtual tour of the R.B. Annis School of Engineering, 
 ---
 
 ## 👥 Project Team & Contributions
-* **Rylan Reasoner** – Student Project Manager & Lead Developer
-* **Daris Kadric** – Assistant Project Manager & Developer
-* **Alain Shimwa** – Core Project Team Member
+* **Rylan Reasoner** - Student Project Manager & Lead Developer
+* **Daris Kadric** - Assistant Project Manager & Developer
+* **Alain Shimwa** - Core Project Team Member
 
 ---
 
