@@ -5,7 +5,7 @@ An interactive 360-degree virtual tour of the R.B. Annis School of Engineering, 
 
 ---
 
-## 👥 Project Team & Contributions
+## Project Team & Contributions
 * **Rylan Reasoner** - Student Project Manager & Lead Developer
 * **Daris Kadric** - Assistant Project Manager & Developer
 * **Alain Shimwa** - Core Project Team Member
@@ -18,5 +18,6 @@ If you are opening this repository locally or working inside a development envir
 
 1. Open your terminal in the root directory of the project.
 2. Run the following command:
+
    ```bash
    python3 -m http.server 8000
