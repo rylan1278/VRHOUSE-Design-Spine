@@ -1,7 +1,7 @@
 # VRHOUSE-Design-Spine (RBASOE Virtual Tour)
 An interactive 360-degree virtual tour of the R.B. Annis School of Engineering, built as part of the DesignSpine curriculum at the University of Indianapolis.
 
-🔗 **Live Demo:** [View Live Virtual Tour](https://rylan1278.github.io/VRHOUSE-Design-Spine/)
+**Live Demo:** [View Live Virtual Tour](https://rylan1278.github.io/VRHOUSE-Design-Spine/)
 
 ---
 
